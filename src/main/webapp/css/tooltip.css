@@ -1,0 +1,34 @@
+.tooltip {
+    position: absolute;
+    visibility: hidden;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -50px;
+}
+
+.login-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.login-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
