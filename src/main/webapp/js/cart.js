@@ -7,23 +7,24 @@ $(document).ready(function() {
         for (var i = 0; i < cartItems.length; i++) {
             var cartItem = cartItems[i];
             var event = cartItem.event;
+            var category = cartItem.category;
             var seats = cartItem.seats;
 
             cartItemsHtml += '<div class="event">';
             cartItemsHtml += '<h3>' + event.title + '</h3>';
-            cartItemsHtml += '<p>' + event.description + '</p>';
             cartItemsHtml += '<p>' + event.date + '</p>';
             cartItemsHtml += '<p>' + event.location + '</p>';
             cartItemsHtml += '<p>' + event.time + '</p>';
+            cartItemsHtml += '<p><strong>Category:</strong> ' + category + '</p>';
 
             if (seats.length > 0) {
-                cartItemsHtml += '<p>Selected Seats:</p>';
+                cartItemsHtml += '<p><strong>Selected Seats:</strong></p>';
                 for (var j = 0; j < seats.length; j++) {
-                    cartItemsHtml += '<p><strong>' + seats[j] + '</strong></p>';
+                    cartItemsHtml += '<p>' + seats[j] + '</p>';
                 }
             }
 
-            cartItemsHtml += '<button class="delete-button" data-index="' + i + '" style="background-color: crimson">Delete</button>';
+            cartItemsHtml += '<button class="openButton" data-index="' + i + '">Delete</button>';
             cartItemsHtml += '</div>';
         }
 
@@ -32,8 +33,7 @@ $(document).ready(function() {
         $('#cartItems').html('<p>No items in the cart.</p>');
     }
 
-    // Handle delete button click
-    $(document).on('click', '.delete-button', function() {
+    $(document).on('click', '.openButton', function() {
         var index = $(this).data('index');
         var cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
@@ -43,4 +43,10 @@ $(document).ready(function() {
             location.reload(); // Refresh the page to reflect the updated cart
         }
     });
+
+
 });
+
+function redirectToPayment() {
+    window.location.href = "payment.jsp";
+}

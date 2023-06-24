@@ -12,6 +12,7 @@ public class CustomerDto implements Serializable {
     private String familyName;
     private LocalDate birthdate;
     private String address;
+    private String creditCardNumber;
 
     public CustomerDto() {
 
@@ -23,6 +24,7 @@ public class CustomerDto implements Serializable {
         setFamilyName(model.getFamilyName());
         setBirthdate(model.getBirthDate());
         setAddress(model.getAddress().getStreetAddress() + " " + model.getAddress().getHouseNumber() +  ", " + model.getAddress().getPostalcode() + " " + model.getAddress().getAddressCountry());
+        setCreditCardNumber(model.getCreditCard().getNumber());
     }
 
     public UUID getId() {
@@ -63,5 +65,13 @@ public class CustomerDto implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
     }
 }

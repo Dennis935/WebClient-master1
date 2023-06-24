@@ -42,49 +42,60 @@
 </div>
 
 <div class="whiteBox">
-    <div class="filter">
+    <div class="genreContainer border-bottom ">
         <h3>Filter</h3>
         <form id="filterForm">
-            <label>
-                <input type="checkbox" name="genre" value="Rock">
-                Rock
-            </label>
-            <label>
-                <input type="checkbox" name="genre" value="Classic">
-                Classic
-            </label>
-            <label>
-                <input type="checkbox" name="genre" value="Pop">
-                Pop
-            </label>
-            <label>
-                <input type="checkbox" name="genre" value="Rap">
-                Rap
-            </label>
-            <label>
-                Choose a Start Date:
-                <input type="date" name="startDate">
-            </label>
-            <br>
-            <label>
-                Choose a End Date:
-                <input type="date" name="endDate">
-            </label>
-            <br>
-            <button type="submit">Filtern</button>
+            <div class="filter-row">
+                <label>
+                    <input type="checkbox" name="genre" value="Rock" style="cursor: pointer;">
+                    Rock
+                </label>
+                <label>
+                    <input type="checkbox" name="genre" value="Classic" style="cursor: pointer;">
+                    Classic
+                </label>
+                <label>
+                    <input type="checkbox" name="genre" value="Pop" style="cursor: pointer;">
+                    Pop
+                </label>
+                <label>
+                    <input type="checkbox" name="genre" value="Rap" style="cursor: pointer;">
+                    Rap
+                </label>
+            </div>
+            <div class="filter-row">
+                <label>
+                    Startdatum:
+                    <input type="date" name="startDate" style="width: 150px;">
+                </label>
+                <label>
+                    Enddatum:
+                    <input type="date" name="endDate" style="width: 150px;">
+                </label>
+            </div>
+            <div class="filter-row">
+                <button class="filterButton" type="submit">Filtern</button>
+            </div>
         </form>
     </div>
 
     <div class="events">
         <h3>Events</h3>
         <form>
-        <div id="eventData"></div>
-        <div class="loader" id="loader"></div>
+            <div id="eventData"></div>
+            <div class="loader" id="loader">
+                <div class="loading-bar"></div>
+                <div class="loading-bar"></div>
+                <div class="loading-bar"></div>
+                <div class="loading-bar"></div>
+            </div>
             <br>
-        <div class="pagination" id="paginationContainer"></div>
         </form>
     </div>
+    <div class="pagination" id="paginationContainer"></div>
 </div>
+
+
 </body>
 <!-- Remove the container if you want to extend the Footer to full width. -->
     <!-- Footer -->

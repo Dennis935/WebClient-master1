@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<div class="whiteBox">
+<div class="loginWhiteBox">
 <form id="login-form" action="LoginServlet" method="post">
   <!-- Username input -->
   <div class="form-outline mb-4">

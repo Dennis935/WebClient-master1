@@ -1,7 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Event Details</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/tooltip.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -10,9 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-7h7s6+sg5uQw3G1O7w4AjlCE+hK8Vi7uMz5F8xAt1VqSz9tLJZ3zNj6k0I5bvlww" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/event.js"></script>
     <script type="text/javascript" src="js/tooltip.js"></script>
+    <script type="text/javascript" src="js/payment.js"></script>
+
 
 </head>
 <body>
@@ -21,40 +22,42 @@
         <a href="index.jsp"><h1>TicketHouse</h1></a>
     </div>
     <div class="navbar-icons">
-        <div class="login-icon">
+        <% String username = (String) session.getAttribute("username");
+            if (username != null) { %>
+        <div class="login-icon" id="logoutButton">
+            <span>Welcome, <%= username %></span>
+            <a href="LogoutServlet" id="logoutLink"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
+            <div class="tooltip">Logout</div>
+        </div>
+        <% } else { %>
+        <div class="login-icon" id="loginButton">
             <a href="login.jsp"><i class="fas fa-user" style="color: white;"></i></a>
             <div class="tooltip">Login</div>
-        </div><br>
-        <div class="login-icon">
-            <a href="LogoutServlet" id="logoutButton"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
-            <div class="tooltip">Logout</div>
-        </div><br>
-        <div class="cart-icon">
-            <a href="cart.jsp"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
+        </div>
+        <% } %>
+        <div class="cart-icon" id="cartButton">
+            <a href="ProfileServlet"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
             <div class="tooltip">Cart</div>
         </div>
+    </div>
+</div>
 
-    </div>
-</div>
 <div class="whiteBox">
-    <div class="event-details">
-        <h3>Event Details</h3>
-        <div class="event-info">
-            <h3 id="eventTitle"></h3>
-            <p id="eventDescription"></p>
-            <p id="eventDate"></p>
-            <p id="eventLocation"></p>
-            <p id="eventTime"></p>
-            <div id="eventSeats"></div>
-        </div>
-        <div id="selectedSeats"></div>
-        <button class="addToCart-button">Add to Cart</button>
-    </div>
+    <form method="POST">
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
 </div>
+
+
 
 </body>
-<!-- Remove the container if you want to extend the Footer to full width. -->
-<!-- Footer -->
+
 <footer class="text-center text-lg-start text-white"
         style="background-color: #1D1B15">
     <!-- Grid container -->

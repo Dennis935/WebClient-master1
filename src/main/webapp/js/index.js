@@ -2,7 +2,7 @@ $(document).ready(function() {
     var loader = $('#loader');
     var eventDataContainer = $('#eventData');
     var paginationContainer = $('#paginationContainer');
-    var eventsPerPage = 5;
+    var eventsPerPage = 8;
     var currentPage = 1;
     var events = [];
 
@@ -26,7 +26,7 @@ $(document).ready(function() {
     });
 
     $('#filterForm').on('submit', function(e) {
-        e.preventDefault(); // Verhindere das Standardverhalten des Formulars
+        e.preventDefault();
 
         var selectedGenres = [];
         var selectedStartDate = $('input[name="startDate"]').val();
@@ -51,21 +51,23 @@ $(document).ready(function() {
         });
 
         var filterForm = $('#filterForm');
-        filterForm.empty(); // Leere die Filteroptionen
+        filterForm.empty();
 
         // Erzeuge die Checkboxen basierend auf den Genre-Werten
+        var genreContainer = $('<div class="genreContainer"></div>'); // Container für die Checkboxen
         genres.forEach(function(genre) {
-            var checkbox = $('<label><input type="checkbox" name="genre" value="' + genre + '">' + genre + '</label><br>');
-            filterForm.append(checkbox);
+            var checkbox = $('<label><input type="checkbox" name="genre" value="'+ genre + '" style="cursor: pointer; margin-right: 5px;"> ' + genre + '</label>');
+            genreContainer.append(checkbox);
         });
+        filterForm.append(genreContainer);
 
         // Füge die Eingabefelder für den Datum-Bereich hinzu
-        var dateInput = $('<label>Startdatum: <input type="date" name="startDate"></label><br>');
-        dateInput.append('Enddatum: <input type="date" name="endDate"></label><br>');
+        var dateInput = $('<label>Startdatum: <input type="date" name="startDate" style="width: 150px; margin-right: 25px; margin-bottom: 10px"></label>');
+        dateInput.append('Enddatum: <input type="date" name="endDate" style="width: 150px;"></label><br>');
         filterForm.append(dateInput);
 
         // Füge den Filter-Button wieder hinzu
-        var filterButton = $('<button type="submit">Filtern</button>');
+        var filterButton = $('<button class="filterButton" type="submit">Filtern</button>');
         filterForm.append(filterButton);
     }
 
@@ -84,23 +86,25 @@ $(document).ready(function() {
         var displayedEvents = events.slice(startIndex, endIndex);
         var eventData = '';
 
+
         $.each(displayedEvents, function(index, event) {
             eventData += '<div class="event">';
             eventData += '<h3>' + event.eventName + '</h3>';
             eventData += '<p>Datum: ' + event.eventDate + '</p>';
             eventData += '<p>Genre: ' + event.genre + '</p>';
-            eventData += '<button class="open" data-event-id="' + event.id + '">Open</button>';
+            eventData += '<button class="openButton" data-event-id="' + event.id + '">Open</button>';
             eventData += '</div>';
         });
         eventDataContainer.html(eventData);
 
         // Klick-Event für den "Open" Button hinzufügen
-        $('.open').click(function(e) {
+        $('.openButton').click(function(e) {
             e.preventDefault(); // Verhindere das Standardverhalten des Buttons
             var eventId = $(this).data('event-id');
             var eventUrl = 'http://localhost:8080/WebClient-1.0-SNAPSHOT/event.jsp?id=' + eventId;
             window.location.href = eventUrl;
         });
+
     }
 
     function updatePaginationButtons() {
