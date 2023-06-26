@@ -60,6 +60,8 @@
         </div>
         <div id="selectedSeats"></div>
         <button class="addToCart-button">Add to Cart</button>
+        <button class="addToWishlist-button">AddtoWishlist</button>
+        <button class="remove-from-wishlist-button">Remove</button>
     </div>
 </div>
 
