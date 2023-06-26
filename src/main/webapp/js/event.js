@@ -26,12 +26,15 @@ $(document).ready(function() {
         $('#eventDate').html('<p class="details">Date:</p> ' + event.date);
         $('#eventLocation').html('<p class="details">Location:</p> ' + event.location);
         $('#eventTime').html('<p class="details">Time:</p> ' + event.time + ' Uhr');
+        var videoUrl = 'http://localhost:8082/video?path=' + event.eventName;
+        var videoElement = '<iframe src="' + videoUrl + '"></iframe>';
+        $('#videoContainer').html(videoElement);
 
         var seatInfo = '';
         event.categories.forEach(function (category) {
             var seatOptions = '';
             var takenSeats = category.takenSeatNumbers || [];
-            seatInfo += '<p class="category">Category: ' + category.categoryName + '</p>';
+            seatInfo += '<p class="category">Category: ' + category.id + '</p>';
 
             seatOptions += '<select class="seat-select" multiple>';
             for (var i = 1; i <= category.numberOfSeats; i++) {

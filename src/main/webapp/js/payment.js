@@ -14,7 +14,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
                 customers = data;
-                var customerId = customers.id;
+                var customerId = customers[0].id; // Greife auf das erste Kundenobjekt im Array zu und extrahiere die ID
 
                 var ticketNumbers = [];
                 var cartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -23,14 +23,14 @@ $(document).ready(function() {
                     for (var i = 0; i < cartItems.length; i++) {
                         var cartItem = cartItems[i];
                         var eventId = cartItem.eventId; // Event-ID aus dem cartItem extrahieren
-                        var categoryId = cartItem.categoryId; // Kategorie-ID aus dem cartItem extrahieren
+                        var categoryId = cartItem.category; // Kategorie-ID aus dem cartItem extrahieren
                         var seatNumbers = cartItem.seats.join(','); // Sitznummern aus dem cartItem extrahieren
                         ticketNumbers.push(seatNumbers);
                     }
 
                     var bookingUrl = 'http://localhost:8080/AppServerWar/api/rest/bookticket?eventid=' + encodeURIComponent(eventId) +
                         '&categoryid=' + encodeURIComponent(categoryId) + '&customerid=' + encodeURIComponent(customerId) +
-                        '&list=' + encodeURIComponent(ticketNumbers.join(';'));
+                        '&list=' + encodeURIComponent(ticketNumbers.join(','));
 
                     // Führen Sie die Buchung durch
                     $.ajax({

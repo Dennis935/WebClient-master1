@@ -43,12 +43,15 @@
 </div>
 
 <div class="whiteBox">
-    <form method="POST">
+    <form method="GET">
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="firstname" required><br><br>
 
         <label for="lastname">Last Name:</label>
         <input type="text" id="lastname" name="lastname" required><br><br>
+
+        <label for="creditcard">Creditcard:</label>
+        <input type="text" id="creditcard" name="creditcard" required><br><br>
 
         <input type="submit" value="Submit">
     </form>

@@ -45,6 +45,7 @@
             <p id="eventDate"></p>
             <p id="eventLocation"></p>
             <p id="eventTime"></p>
+            <div id="videoContainer"></div>
             <div id="eventSeats"></div>
         </div>
         <div id="selectedSeats"></div>
