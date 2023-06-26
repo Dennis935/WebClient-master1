@@ -63,19 +63,23 @@
         <a href="index.jsp"><h1>TicketHouse</h1></a>
     </div>
     <div class="navbar-icons">
-        <div class="login-icon">
+        <% String username = (String) session.getAttribute("username");
+            if (username != null) { %>
+        <div class="login-icon" id="logoutButton">
+            <span>Welcome, <%= username %></span>
+            <a href="LogoutServlet" id="logoutLink"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
+            <div class="tooltip">Logout</div>
+        </div>
+        <% } else { %>
+        <div class="login-icon" id="loginButton">
             <a href="login.jsp"><i class="fas fa-user" style="color: white;"></i></a>
             <div class="tooltip">Login</div>
-        </div><br>
-        <div class="login-icon">
-            <a href="LogoutServlet" id="logoutButton"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
-            <div class="tooltip">Logout</div>
-        </div><br>
-        <div class="cart-icon">
-            <a href="cart.jsp"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
+        </div>
+        <% } %>
+        <div class="cart-icon" id="cartButton">
+            <a href="ProfileServlet"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
             <div class="tooltip">Cart</div>
         </div>
-
     </div>
 </div>
 <div class="whiteBox">

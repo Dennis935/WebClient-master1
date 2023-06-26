@@ -34,7 +34,7 @@ $(document).ready(function() {
         event.categories.forEach(function (category) {
             var seatOptions = '';
             var takenSeats = category.takenSeatNumbers || [];
-            seatInfo += '<p class="category">Category: ' + category.id + '</p>';
+            seatInfo += '<p class="category" data-category-id="' + category.id + '">Category: ' + category.categoryName + '</p>';
 
             seatOptions += '<select class="seat-select" multiple>';
             for (var i = 1; i <= category.numberOfSeats; i++) {
@@ -86,11 +86,13 @@ $(document).ready(function() {
     $('.addToCart-button').click(function() {
         var selectedSeats = [];
         var selectedCategory = '';
+        var selectedCategoryId= '';
         var selectedEventId = eventId; // Store the event ID
 
         $('select option:selected').each(function() {
             selectedSeats.push($(this).val());
             selectedCategory = $(this).closest('.seat-options').prev('.category').text().replace('Category: ', '');
+            selectedCategoryId = $(this).closest('.seat-options').prev('.category').data('category-id');
         });
 
         var eventDetails = {
@@ -103,8 +105,11 @@ $(document).ready(function() {
 
         var cartItem = {
             event: eventDetails,
-            eventId: selectedEventId, // Store the event ID in the cart item
-            category: selectedCategory,
+            eventId: selectedEventId,
+            category: {
+                id: selectedCategoryId,
+                name: selectedCategory
+            },
             seats: selectedSeats,
         };
 

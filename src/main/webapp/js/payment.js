@@ -23,7 +23,7 @@ $(document).ready(function() {
                     for (var i = 0; i < cartItems.length; i++) {
                         var cartItem = cartItems[i];
                         var eventId = cartItem.eventId; // Event-ID aus dem cartItem extrahieren
-                        var categoryId = cartItem.category; // Kategorie-ID aus dem cartItem extrahieren
+                        var categoryId = cartItem.category.id; // Kategorie-ID aus dem cartItem extrahieren
                         var seatNumbers = cartItem.seats.join(','); // Sitznummern aus dem cartItem extrahieren
                         ticketNumbers.push(seatNumbers);
                     }

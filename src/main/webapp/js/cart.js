@@ -7,7 +7,7 @@ $(document).ready(function() {
         for (var i = 0; i < cartItems.length; i++) {
             var cartItem = cartItems[i];
             var event = cartItem.event;
-            var category = cartItem.category;
+            var category = cartItem.category.name;
             var seats = cartItem.seats;
 
             cartItemsHtml += '<div class="event">';
