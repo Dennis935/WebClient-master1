@@ -1,9 +1,9 @@
 $(document).ready(function() {
     var customerId = $('#logoutButton').data('username');
     $.ajax({
-        url: '/wishlist/display',
+        url: 'http://localhost:8083/wishlist/display',
         type: 'GET',
-        data: { customerId: customerId }, // Replace 'your-customer-id' with the actual customer ID
+        data: { customerId: customerId },
         success: function(response) {
             var wishlistItems = response;
 
@@ -35,4 +35,3 @@ $(document).ready(function() {
         }
     });
 });
-

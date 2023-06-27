@@ -17,9 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-7h7s6+sg5uQw3G1O7w4AjlCE+hK8Vi7uMz5F8xAt1VqSz9tLJZ3zNj6k0I5bvlww" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="js/login.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/event.js"></script>
     <script type="text/javascript" src="js/wishlist.js"></script>
 
 
@@ -86,14 +84,18 @@
 <div class="whiteBox">
     <div class="events">
         <h2>Wishlist</h2>
-        <c:forEach items="${wishlist}" var="event">
+            <div id="wishlistItems"></div>
+        <c:forEach items="${wishlist.events}" var="event">
             <div class="event">
-                <h3>${event.name}</h3>
-                <p>Date: ${event.date}</p>
-                <p>Category: ${event.category}</p>
+                <h3>${event.title}</h3>
+                <p>${event.description}</p>
+                <p>${event.date}</p>
+                <p>${event.location}</p>
+                <p>${event.time}</p>
                 <button class="remove-button" onclick="removeFromWishlist('${event.id}')">Remove</button>
             </div>
         </c:forEach>
+
     </div>
 </div>
 </body>
