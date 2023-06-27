@@ -9,20 +9,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cart</title>
+    <title>Wishlist</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/tooltip.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-7h7s6+sg5uQw3G1O7w4AjlCE+hK8Vi7uMz5F8xAt1VqSz9tLJZ3zNj6k0I5bvlww" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="js/cart.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/tooltip.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="js/wishlist.js"></script>
 
+
+    <style>
+        .event {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .event:last-child {
+            border-bottom: none;
+        }
+        .event h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .event p {
+            margin: 0;
+            font-size: 14px;
+            color: #888;
+        }
+        .remove-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
 <div class="top-navbar">
@@ -30,22 +59,14 @@
         <a href="index.jsp"><h1>TicketHouse</h1></a>
     </div>
     <div class="navbar-icons">
-        <% String username = (String) session.getAttribute("username");
-            if (username != null) { %>
-        <div class="login-icon" id="logoutButton">
-            <span>Welcome, <%= username %></span>
-            <a href="LogoutServlet" id="logoutLink"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
-            <div class="tooltip">Logout</div>
-        </div>
-        <% } else { %>
-        <div class="login-icon" id="loginButton">
+        <div class="login-icon">
             <a href="login.jsp"><i class="fas fa-user" style="color: white;"></i></a>
-            <div class="tooltip">Login</div>
-        </div>
-        <% } %>
-        <div class="cart-icon" id="cartButton">
-            <a href="ProfileServlet"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
-            <div class="tooltip">Cart</div>
+        </div><br>
+        <div class="login-icon">
+            <a href="LogoutServlet" id="logoutButton"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
+        </div><br>
+        <div class="cart-icon">
+            <a href="cart.jsp"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
         </div>
         <div class="wishlist-icon">
             <a href="wishlist.jsp"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
@@ -55,17 +76,21 @@
 </div>
 <div class="whiteBox">
     <div class="events">
-        <h2>Cart</h2>
-        <div id="cartItems">
-            <!-- Cart items will be dynamically generated here -->
-        </div>
-        <button class="buy-button" onclick="redirectToPayment()">Proceed To Payment</button>
+        <h2>Wishlist</h2>
+        <c:forEach items="${wishlist}" var="event">
+            <div class="event">
+                <h3>${event.name}</h3>
+                <p>Date: ${event.date}</p>
+                <p>Category: ${event.category}</p>
+                <button class="remove-button" onclick="removeFromWishlist('${event.id}')">Remove</button>
+            </div>
+        </c:forEach>
     </div>
 </div>
-
+<button class="buy-button">Buy</button>
 </body>
 <footer class="text-center text-lg-start text-white"
-        style="background-color: #090907">
+        style="background-color: #1D1B15">
     <!-- Grid container -->
     <div class="container p-4 pb-0">
         <!-- Section: Links -->
