@@ -22,40 +22,6 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/tooltip.js"></script>
 
-
-    <style>
-        .event {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-        .event:last-child {
-            border-bottom: none;
-        }
-        .event h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-        .event p {
-            margin: 0;
-            font-size: 14px;
-            color: #888;
-        }
-        .buy-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .buy-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
 <div class="top-navbar">
@@ -94,7 +60,7 @@
 
 </body>
 <footer class="text-center text-lg-start text-white"
-        style="background-color: #1D1B15">
+        style="background-color: #090907">
     <!-- Grid container -->
     <div class="container p-4 pb-0">
         <!-- Section: Links -->

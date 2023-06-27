@@ -19,10 +19,9 @@ $(document).ready(function() {
 
             if (seats.length > 0) {
                 cartItemsHtml += '<p><strong>Selected Seats:</strong></p>';
-                for (var j = 0; j < seats.length; j++) {
-                    cartItemsHtml += '<p>' + seats[j] + '</p>';
-                }
+                cartItemsHtml += '<p>' + seats.join(', ') + '</p>';
             }
+
 
             cartItemsHtml += '<button class="openButton" data-index="' + i + '">Delete</button>';
             cartItemsHtml += '</div>';

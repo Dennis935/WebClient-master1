@@ -13,41 +13,25 @@ $(document).ready(function() {
             method: 'GET',
             dataType: 'json',
             success: function(data) {
-                customers = data;
-                var customerId = customers[0].id; // Greife auf das erste Kundenobjekt im Array zu und extrahiere die ID
+                var customers = data;
+                if (customers.length > 0) {
+                    var customer = customers[0];
+                    var customerId = customer.id;
+                    var storedCreditCardNumber = customer.creditCardNumber;
 
-                var ticketNumbers = [];
-                var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                    if (creditCardNumber === storedCreditCardNumber) {
+                        var cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
-                if (cartItems && cartItems.length > 0) {
-                    for (var i = 0; i < cartItems.length; i++) {
-                        var cartItem = cartItems[i];
-                        var eventId = cartItem.eventId; // Event-ID aus dem cartItem extrahieren
-                        var categoryId = cartItem.category.id; // Kategorie-ID aus dem cartItem extrahieren
-                        var seatNumbers = cartItem.seats.join(','); // Sitznummern aus dem cartItem extrahieren
-                        ticketNumbers.push(seatNumbers);
-                    }
-
-                    var bookingUrl = 'http://localhost:8080/AppServerWar/api/rest/bookticket?eventid=' + encodeURIComponent(eventId) +
-                        '&categoryid=' + encodeURIComponent(categoryId) + '&customerid=' + encodeURIComponent(customerId) +
-                        '&list=' + encodeURIComponent(ticketNumbers.join(','));
-
-                    // Führen Sie die Buchung durch
-                    $.ajax({
-                        url: bookingUrl,
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(response) {
-                            alert("Erfolgreich");
-                            // Weiterleiten oder andere Aktionen nach der erfolgreichen Buchung
-                        },
-                        error: function(error) {
-                            alert("Fehler beim Buchen");
-                            // Handhaben Sie den Fehler entsprechend
+                        if (cartItems && cartItems.length > 0) {
+                            performBooking(cartItems, customerId, 0);
+                        } else {
+                            alert("Der Warenkorb ist leer.");
                         }
-                    });
+                    } else {
+                        alert("Die eingegebene Kreditkartennummer ist nicht korrekt.");
+                    }
                 } else {
-                    alert("Der Warenkorb ist leer.");
+                    alert("Kunde nicht gefunden.");
                 }
             },
             error: function(error) {
@@ -56,4 +40,43 @@ $(document).ready(function() {
             }
         });
     });
+
+    function performBooking(cartItems, customerId, index) {
+        if (index >= cartItems.length) {
+            // Alle Buchungen abgeschlossen
+            alert("Alle Buchungen wurden erfolgreich durchgeführt.");
+            localStorage.removeItem('cartItems'); // Warenkorb leeren
+            window.location.href = "success.jsp";
+            return;
+        }
+
+        var cartItem = cartItems[index];
+        var eventId = cartItem.eventId;
+        var categoryId = cartItem.category.id;
+        var categoryName = cartItem.category.name;
+        var seatNumbers = cartItem.seats.join(',');
+
+        var bookingUrl = 'http://localhost:8080/AppServerWar/api/rest/bookticket?eventid=' + encodeURIComponent(eventId) +
+            '&categoryid=' + encodeURIComponent(categoryId) + '&customerid=' + encodeURIComponent(customerId) +
+            '&list=' + encodeURIComponent(seatNumbers);
+
+        // Führen Sie die Buchung durch
+        $.ajax({
+            url: bookingUrl,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                alert("Buchung erfolgreich für Kategorie: " + categoryId);
+                // Weiterleiten oder andere Aktionen nach der erfolgreichen Buchung
+
+                // Rufen Sie die Buchung für die nächste Kategorie auf
+                performBooking(cartItems, customerId, index + 1);
+            },
+            error: function(error) {
+                alert("Fehler beim Buchen für Kategorie: " + categoryName);
+
+                performBooking(cartItems, customerId, index + 1);
+            }
+        });
+    }
 });

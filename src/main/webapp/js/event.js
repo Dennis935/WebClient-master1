@@ -85,14 +85,28 @@ $(document).ready(function() {
 
     $('.addToCart-button').click(function() {
         var selectedSeats = [];
-        var selectedCategory = '';
-        var selectedCategoryId= '';
-        var selectedEventId = eventId; // Store the event ID
+        var selectedCategories = [];
+        var selectedEventId = eventId;
 
         $('select option:selected').each(function() {
-            selectedSeats.push($(this).val());
-            selectedCategory = $(this).closest('.seat-options').prev('.category').text().replace('Category: ', '');
-            selectedCategoryId = $(this).closest('.seat-options').prev('.category').data('category-id');
+            var seat = $(this).val();
+            var category = {
+                name: $(this).closest('.seat-options').prev('.category').text().replace('Category: ', ''),
+                id: $(this).closest('.seat-options').prev('.category').data('category-id')
+            };
+
+            var existingCategoryIndex = selectedCategories.findIndex(function(selectedCategory) {
+                return selectedCategory.id === category.id;
+            });
+
+            if (existingCategoryIndex > -1) {
+                // Category already exists in selectedCategories
+                selectedCategories[existingCategoryIndex].seats.push(seat);
+            } else {
+                // New category
+                category.seats = [seat];
+                selectedCategories.push(category);
+            }
         });
 
         var eventDetails = {
@@ -103,40 +117,53 @@ $(document).ready(function() {
             time: $('#eventTime').text(),
         };
 
-        var cartItem = {
-            event: eventDetails,
-            eventId: selectedEventId,
-            category: {
-                id: selectedCategoryId,
-                name: selectedCategory
-            },
-            seats: selectedSeats,
-        };
-
-        // Get existing cart items from Local Storage
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        // Check if selected seats already exist in the cart for the same category
-        var isCategoryAlreadyInCart = false;
-        for (var i = 0; i < cartItems.length; i++) {
-            var currentItem = cartItems[i];
+        for (var i = 0; i < selectedCategories.length; i++) {
+            var selectedCategory = selectedCategories[i];
+            var isCategoryAlreadyInCart = false;
 
-            if (currentItem.category === selectedCategory) {
-                currentItem.seats = currentItem.seats.concat(selectedSeats);
-                isCategoryAlreadyInCart = true;
-                break;
+            for (var j = 0; j < cartItems.length; j++) {
+                var currentItem = cartItems[j];
+
+                if (currentItem.category.id === selectedCategory.id) {
+                    var commonSeats = currentItem.seats.filter(function(seat) {
+                        return selectedCategory.seats.includes(seat);
+                    });
+
+                    if (commonSeats.length > 0) {
+                        alert('Selected seat(s) already exist in the cart for the same category.');
+                        return;
+                    }
+
+                    currentItem.seats = currentItem.seats.concat(selectedCategory.seats);
+                    isCategoryAlreadyInCart = true;
+                    break;
+                }
+            }
+
+            if (!isCategoryAlreadyInCart) {
+                var cartItem = {
+                    event: eventDetails,
+                    eventId: selectedEventId,
+                    category: selectedCategory,
+                    seats: selectedCategory.seats,
+                };
+                cartItems.push(cartItem);
             }
         }
 
-        if (!isCategoryAlreadyInCart) {
-            cartItems.push(cartItem);
-        }
-
-        // Store updated cart items in Local Storage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
         alert('Event details and seats added to cart successfully!');
     });
+
+
+
+
+
+
+
+    //Wishlist
 
     var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
 
@@ -164,7 +191,6 @@ $(document).ready(function() {
     }
 
 
-    //Wishlist
     // Handle remove from wishlist button click
     $(document).on('click', '.remove-from-wishlist-button', function() {
         var index = $(this).data('index');
