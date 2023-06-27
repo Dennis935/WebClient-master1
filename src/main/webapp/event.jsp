@@ -86,6 +86,9 @@
                     <div id="selectedSeats"></div>
                     <div id="eventSeats"></div>
                     <button class="addToCart-button">Add to Cart</button>
+                    <button class="addToWishlist-button">Add Wishlist</button>
+                    <button class="removeWishlist-button">Remove Wishlist</button>
+
                 </div>
             </div>
         </div>

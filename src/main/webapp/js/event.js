@@ -209,23 +209,9 @@ $(document).ready(function() {
         $('#wishlistItems').html('<p>No items in the wishlist.</p>');
     }
 
-
-    // Handle remove from wishlist button click
-    $(document).on('click', '.remove-from-wishlist-button', function() {
-        var index = $(this).data('index');
-        var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
-
-        if (wishlistItems && wishlistItems.length > index) {
-            wishlistItems.splice(index, 1);
-            localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
-            location.reload();
-        }
-    });
-
     // Handle add to wishlist button click
     $(document).on('click', '.addToWishlist-button', function() {
         var customerID = $('#logoutButton').data('username');
-
         var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + customerID;
 
         fetch(url, { method: 'GET' })
@@ -246,4 +232,29 @@ $(document).ready(function() {
             });
     });
 
+    // Handle remove from wishlist button click
+    $(document).on('click', '.removeWishlist-button', function() {
+        var customerID = $('#logoutButton').data('username');
+        // Make a request to remove the wishlist item
+        var url = 'http://localhost:8083/wishlist/remove?eventId=' + eventId + '&customerId=' + customerID;
+
+        fetch(url, { method: 'GET' })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Wishlist item removed');
+                    // Remove the wishlist item locally
+                    var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+                    var updatedWishlistItems = wishlistItems.filter(item => item.event.id !== eventId);
+                    localStorage.setItem('wishlistItems', JSON.stringify(updatedWishlistItems));
+                    location.reload(); // Refresh the page to reflect the updated wishlist
+                } else {
+                    console.error('Failed to remove wishlist item');
+                }
+            })
+            .catch(error => {
+                console.error('Error removing wishlist item:', error);
+            });
+    });
+
 });
+
