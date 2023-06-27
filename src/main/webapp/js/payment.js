@@ -1,18 +1,29 @@
-$(document).ready(function() {
-    // Submit form on button click
-    $('form').submit(function(event) {
+$(document).ready(function () {
+    $('form').submit(function (event) {
         event.preventDefault();
         var firstName = $('#firstname').val();
         var lastName = $('#lastname').val();
         var creditCardNumber = $('#creditcard').val();
 
-        var customerUrl = 'http://localhost:8080/AppServerWar/api/rest/customers?firstname=' + encodeURIComponent(firstName) + '&lastname=' + encodeURIComponent(lastName);
+        var customerUrl = 'http://localhost:8080/AppServerWar/api/rest/customers?firstname=' +
+            encodeURIComponent(firstName) + '&lastname=' + encodeURIComponent(lastName);
+
+        //Loader
+        Swal.fire({
+            icon: 'info',
+            title: 'Buchung wird bearbeitet...',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
         $.ajax({
             url: customerUrl,
             method: 'GET',
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 var customers = data;
                 if (customers.length > 0) {
                     var customer = customers[0];
@@ -25,28 +36,70 @@ $(document).ready(function() {
                         if (cartItems && cartItems.length > 0) {
                             performBooking(cartItems, customerId, 0);
                         } else {
-                            alert("Der Warenkorb ist leer.");
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Warenkorb ist leer',
+                                text: 'Der Warenkorb ist leer.',
+                                confirmButtonColor: '#235da8',
+                                timer: 3000,
+                                timerProgressBar: true
+                            }).then(function () {
+                                Swal.close(); // Close the Swal alert
+                            });
                         }
                     } else {
-                        alert("Die eingegebene Kreditkartennummer ist nicht korrekt.");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Falsche Kreditkartennummer',
+                            text: 'Die eingegebene Kreditkartennummer ist nicht korrekt.',
+                            confirmButtonColor: '#235da8',
+                            timer: 3000,
+                            timerProgressBar: true
+                        }).then(function () {
+                            Swal.close(); // Close the Swal alert
+                        });
                     }
                 } else {
-                    alert("Kunde nicht gefunden.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Kunde nicht gefunden',
+                        text: 'Kunde nicht gefunden.',
+                        confirmButtonColor: '#235da8',
+                        timer: 3000,
+                        timerProgressBar: true
+                    }).then(function () {
+                        Swal.close(); // Close the Swal alert
+                    });
                 }
             },
-            error: function(error) {
-                alert("Fehler beim Abrufen der Kunden-ID");
-                // Handhaben Sie den Fehler entsprechend
+            error: function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Fehler beim Abrufen der Kunden-ID',
+                    text: 'Beim Abrufen der Kunden-ID ist ein Fehler aufgetreten.',
+                    confirmButtonColor: '#235da8',
+                    timer: 3000,
+                    timerProgressBar: true
+                }).then(function () {
+                    Swal.close(); // Close the Swal alert
+                });
             }
         });
     });
 
     function performBooking(cartItems, customerId, index) {
         if (index >= cartItems.length) {
-            // Alle Buchungen abgeschlossen
-            alert("Alle Buchungen wurden erfolgreich durchgeführt.");
-            localStorage.removeItem('cartItems'); // Warenkorb leeren
-            window.location.href = "success.jsp";
+            Swal.fire({
+                icon: 'success',
+                title: 'Buchungen erfolgreich',
+                text: 'Alle Buchungen wurden erfolgreich durchgeführt.',
+                timer: 3000,
+                timerProgressBar: true
+            }).then(function () {
+                localStorage.removeItem('cartItems');
+                window.location.href = "success.jsp";
+            });
+
             return;
         }
 
@@ -56,26 +109,51 @@ $(document).ready(function() {
         var categoryName = cartItem.category.name;
         var seatNumbers = cartItem.seats.join(',');
 
-        var bookingUrl = 'http://localhost:8080/AppServerWar/api/rest/bookticket?eventid=' + encodeURIComponent(eventId) +
-            '&categoryid=' + encodeURIComponent(categoryId) + '&customerid=' + encodeURIComponent(customerId) +
-            '&list=' + encodeURIComponent(seatNumbers);
+        var bookingUrl = 'http://localhost:8080/AppServerWar/api/rest/bookticket?eventid=' +
+            encodeURIComponent(eventId) + '&categoryid=' + encodeURIComponent(categoryId) +
+            '&customerid=' + encodeURIComponent(customerId) + '&list=' + encodeURIComponent(seatNumbers);
 
-        // Führen Sie die Buchung durch
         $.ajax({
             url: bookingUrl,
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                alert("Buchung erfolgreich für Kategorie: " + categoryId);
-                // Weiterleiten oder andere Aktionen nach der erfolgreichen Buchung
-
-                // Rufen Sie die Buchung für die nächste Kategorie auf
-                performBooking(cartItems, customerId, index + 1);
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Buchung erfolgreich',
+                    text: 'Buchung erfolgreich für Kategorie: ' + categoryName,
+                    timer: 3000,
+                    timerProgressBar: true
+                }).then(function () {
+                    performBooking(cartItems, customerId, index + 1);
+                });
             },
-            error: function(error) {
-                alert("Fehler beim Buchen für Kategorie: " + categoryName);
-
-                performBooking(cartItems, customerId, index + 1);
+            error: function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Fehler beim Buchen',
+                    text: 'Fehler beim Buchen für Kategorie: ' + categoryName,
+                    confirmButtonColor: '#235da8',
+                    timer: 3000,
+                    timerProgressBar: true
+                }).then(function () {
+                    performBooking(cartItems, customerId, index + 1);
+                });
+            },
+            complete: function () {
+                if (index >= cartItems.length - 1) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Buchungen erfolgreich',
+                        text: 'Alle Buchungen wurden erfolgreich durchgeführt.',
+                        confirmButtonColor: '#235da8',
+                        timer: 3000,
+                        timerProgressBar: true
+                    }).then(function () {
+                        localStorage.removeItem('cartItems');
+                        window.location.href = "success.jsp";
+                    });
+                }
             }
         });
     }

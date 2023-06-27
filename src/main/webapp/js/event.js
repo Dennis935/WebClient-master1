@@ -132,8 +132,11 @@ $(document).ready(function() {
                     });
 
                     if (commonSeats.length > 0) {
-                        alert('Selected seat(s) already exist in the cart for the same category.');
-                        return;
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Not Possible',
+                            text: 'Selected seat(s) already exist in the cart for the same category.'
+                        });                        return;
                     }
 
                     currentItem.seats = currentItem.seats.concat(selectedCategory.seats);
@@ -154,7 +157,12 @@ $(document).ready(function() {
         }
 
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        alert('Event details and seats added to cart successfully!');
+        Swal.fire({
+            icon: 'success',
+            title: 'Successfully added to shopping cart',
+            confirmButtonColor: '#235da8',
+            text: 'Your ticket seat(s) are in your shopping cart. Keep in mind that you tickets in your shopping cart are not reserved.'
+        });
     });
 
 
