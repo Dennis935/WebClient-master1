@@ -182,11 +182,6 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
-
     //Wishlist
 
     var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
@@ -223,17 +218,15 @@ $(document).ready(function() {
         if (wishlistItems && wishlistItems.length > index) {
             wishlistItems.splice(index, 1);
             localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
-            location.reload(); // Refresh the page to reflect the updated wishlist
+            location.reload();
         }
     });
 
     // Handle add to wishlist button click
     $(document).on('click', '.addToWishlist-button', function() {
-        var customerID = '<%= session.getAttribute("username") %>'; // Obtain the customer ID from the logged-in customer
+        var customerID = $('#logoutButton').data('username');
 
-        var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + 'tello';
-        //var url = 'http://localhost:8083/wishlist/add?eventId=32a5aa13-cc3c-40df-ab98-c85e590cdd66&customerId=Tello';
-
+        var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + customerID;
 
         fetch(url, { method: 'GET' })
             .then(response => {

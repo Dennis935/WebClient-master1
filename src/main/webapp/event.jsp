@@ -35,7 +35,7 @@
     <div class="navbar-icons">
         <% String username = (String) session.getAttribute("username");
             if (username != null) { %>
-        <div class="login-icon" id="logoutButton">
+        <div class="login-icon" id="logoutButton" data-username="<%= username %>">
             <span>Welcome, <%= username %></span>
             <a href="LogoutServlet" id="logoutLink"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
             <div class="tooltip">Logout</div>
