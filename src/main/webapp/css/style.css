@@ -193,6 +193,30 @@ p {
     transform: translateY(-1px);
 }
 
+.deleteButton {
+    display: inline-block;
+    width: 100px;
+    padding: 1.1em 1.5em;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #DC143C;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.deleteButton:hover {
+    background-color: #DC143C;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+}
+
 .filterButton {
     display: block;
     width: 150px;
@@ -487,6 +511,7 @@ footer {
 .openButton:focus,
 .addToCart-button:focus,
 .buy-button:focus,
+.deleteButton:focus,
 .button:focus
 {
     outline: none;
@@ -494,7 +519,7 @@ footer {
 
 /* Event Details */
 
-.event-details {
+/*.event-details {
     font-family: Arial, sans-serif;
     padding: 10px;
     text-align: center;
@@ -517,7 +542,7 @@ footer {
 
 .event-info p {
     margin-top: 5px;
-}
+}*/
 
 #eventSeats {
     margin-top: 10px;
@@ -554,4 +579,104 @@ footer {
     padding: 10px 20px;
     border-radius: 5px;
     z-index: 9999;
+}
+
+
+
+
+
+.dropdown-button {
+    padding: 5px 10px;
+    background-color: #e5e5e5;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.show {
+    display: block;
+}
+
+.selected-seats {
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.selected-seats ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+}
+
+.selected-seats ul li {
+    margin-bottom: 5px;
+}
+
+.selected-seats-dropdown-list input[type="checkbox"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.selected-seats-dropdown-list li {
+    list-style-type: none;
+}
+
+
+.event-details {
+    margin-bottom: 20px;
+}
+
+.event-details h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.event-info {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.event-info h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.event-info p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+
+.addToCart-button {
+    display: block;
+    width: 150px;
+    padding: 1.1em 1.5em;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #2976d6;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    margin-top: 20px;
 }

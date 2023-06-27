@@ -16,11 +16,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-7h7s6+sg5uQw3G1O7w4AjlCE+hK8Vi7uMz5F8xAt1VqSz9tLJZ3zNj6k0I5bvlww" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <script type="text/javascript" src="js/tooltip.js"></script>
     <script type="text/javascript" src="js/payment.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -53,19 +56,43 @@
     </div>
 </div>
 
-<div class="whiteBox">
-    <form method="GET">
-        <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" required><br><br>
-
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" required><br><br>
-
-        <label for="creditcard">Creditcard:</label>
-        <input type="text" id="creditcard" name="creditcard" required><br><br>
-
-        <input type="submit" value="Submit">
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="whiteBox">
+                <h2>Your Order</h2>
+                <div id="cartItems" class="row"></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="whiteBox">
+                <h2>Payment Details</h2>
+                <br>
+                <form method="GET">
+                    <div class="form-group">
+                        <label for="firstname">Firstname:</label>
+                        <input type="text" id="firstname" name="firstname" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Lastname:</label>
+                        <input type="text" id="lastname" name="lastname" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="creditcard">Creditcard number:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-credit-card"></i>
+                        </span>
+                            </div>
+                            <input type="text" id="creditcard" name="creditcard" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 

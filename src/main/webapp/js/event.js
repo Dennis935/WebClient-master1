@@ -21,14 +21,15 @@ $(document).ready(function() {
     });
 
     function displayEventDetails(event) {
-        $('#eventTitle').html(event.eventName);
+        $('#eventTitle').html('<strong>' + event.eventName + '</strong>');
         $('#eventDescription').html(event.eventDesc);
         $('#eventDate').html('<p class="details">Date:</p> ' + event.date);
         $('#eventLocation').html('<p class="details">Location:</p> ' + event.location);
         $('#eventTime').html('<p class="details">Time:</p> ' + event.time + ' Uhr');
         var videoUrl = 'http://localhost:8082/video?path=' + event.eventName;
-        var videoElement = '<iframe src="' + videoUrl + '"></iframe>';
+        var videoElement = '<div class="video-container"><video src="' + videoUrl + '" width="540" height="360" controls></video></div>';
         $('#videoContainer').html(videoElement);
+
 
         var seatInfo = '';
         event.categories.forEach(function (category) {
@@ -36,33 +37,47 @@ $(document).ready(function() {
             var takenSeats = category.takenSeatNumbers || [];
             seatInfo += '<p class="category" data-category-id="' + category.id + '">Category: ' + category.categoryName + '</p>';
 
-            seatOptions += '<select class="seat-select" multiple>';
+            seatOptions += '<div class="selected-seats-dropdown">';
+            seatOptions += '<button class="dropdown-button">Select Seats</button>';
+            seatOptions += '<div class="dropdown-content">';
+            seatOptions += '<ul class="selected-seats-dropdown-list">';
+
             for (var i = 1; i <= category.numberOfSeats; i++) {
                 if (takenSeats.includes(i)) {
-                    seatOptions += '<option value="' + i + '" disabled>' + i + ' (Taken)</option>';
+                    seatOptions += '<li>';
+                    seatOptions += '<input type="checkbox" value="' + i + '" disabled>';
+                    seatOptions += '<label>' + i + ' (Taken)</label>';
+                    seatOptions += '</li>';
                 } else {
-                    seatOptions += '<option value="' + i + '">' + i + '</option>';
+                    seatOptions += '<li>';
+                    seatOptions += '<input type="checkbox" value="' + i + '">';
+                    seatOptions += '<label>' + i + '</label>';
+                    seatOptions += '</li>';
                 }
             }
-            seatOptions += '</select>';
+            seatOptions += '</ul>';
+            seatOptions += '</div>';
+            seatOptions += '</div>';
 
             seatInfo += '<div class="seat-options">' + seatOptions + '</div>';
-
-            // Add change event listener for the select element in this category
             seatInfo += '<div class="selected-seats"></div>'; // Container for selected seats of this category
         });
 
-        $('#eventSeats').html('<p class="seats-heading">Seats:</p>' + seatInfo);
+        $('#eventSeats').html('<p class="seats-heading"></p>' + seatInfo);
 
-        $('.seat-select').change(function () {
+        $('.selected-seats-dropdown .dropdown-button').click(function () {
+            $(this).next('.dropdown-content').toggleClass('show');
+        });
+
+        $('.selected-seats-dropdown-list input[type="checkbox"]').change(function () {
             var selectedSeats = [];
-            $(this).find('option:selected').each(function () {
+            $(this).closest('.selected-seats-dropdown-list').find('input[type="checkbox"]:checked').each(function () {
                 selectedSeats.push($(this).val());
             });
 
             // Find the corresponding selected seats container based on the category
             var categoryContainer = $(this).closest('.seat-options').next('.selected-seats');
-            categoryContainer.html('Selected Seats: ' + selectedSeats.join(', '));
+            categoryContainer.html('<strong>Selected Seats:</strong> ' + selectedSeats.join(', ')).css('margin-bottom', '20px');
 
             // Update the Cart button to enable/disable based on seat selection
             updateCartButton();
@@ -72,7 +87,8 @@ $(document).ready(function() {
     // Update the Cart button to enable/disable based on seat selection
     function updateCartButton() {
         var isSeatSelected = false;
-        $('.seat-select').each(function () {
+
+        $('.selected-seats-dropdown-list input[type="checkbox"]').each(function () {
             if ($(this).val().length > 0) {
                 isSeatSelected = true;
                 return false; // Exit the loop if a seat is selected
@@ -88,7 +104,7 @@ $(document).ready(function() {
         var selectedCategories = [];
         var selectedEventId = eventId;
 
-        $('select option:selected').each(function() {
+        $('.selected-seats-dropdown-list input[type="checkbox"]:checked').each(function() {
             var seat = $(this).val();
             var category = {
                 name: $(this).closest('.seat-options').prev('.category').text().replace('Category: ', ''),

@@ -1,4 +1,39 @@
 $(document).ready(function () {
+    var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+
+    if (cartItems && cartItems.length > 0) {
+        var cartItemsHtml = '';
+
+        for (var i = 0; i < cartItems.length; i++) {
+            var cartItem = cartItems[i];
+            var event = cartItem.event;
+            var category = cartItem.category.name;
+            var seats = cartItem.seats;
+
+            cartItemsHtml += '<div class="col-md-6">';
+            cartItemsHtml += '<div class="card mb-3">';
+            cartItemsHtml += '<div class="card-body">';
+            cartItemsHtml += '<h5 class="card-title">' + event.title + '</h5>';
+            cartItemsHtml += '<p class="card-text"><strong>Date:</strong> ' + event.date + '</p>';
+            cartItemsHtml += '<p class="card-text"><strong>Location:</strong> ' + event.location + '</p>';
+            cartItemsHtml += '<p class="card-text"><strong>Time:</strong> ' + event.time + '</p>';
+            cartItemsHtml += '<p class="card-text"><strong>Category:</strong> ' + category + '</p>';
+
+            if (seats.length > 0) {
+                cartItemsHtml += '<p class="card-text"><strong>Selected Seats:</strong> ' + seats.join(', ') + '</p>';
+            }
+
+            cartItemsHtml += '</div>';
+            cartItemsHtml += '</div>';
+            cartItemsHtml += '</div>';
+        }
+
+        $('#cartItems').html(cartItemsHtml);
+    } else {
+        $('#cartItems').html('<p>No items to buy</p>');
+    }
+
+
     $('form').submit(function (event) {
         event.preventDefault();
         var firstName = $('#firstname').val();
@@ -158,3 +193,4 @@ $(document).ready(function () {
         });
     }
 });
+

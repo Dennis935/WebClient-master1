@@ -55,7 +55,7 @@
         <div id="cartItems">
             <!-- Cart items will be dynamically generated here -->
         </div>
-        <button class="buy-button" onclick="redirectToPayment()">Buy</button>
+        <button class="buy-button" onclick="redirectToPayment()">Proceed To Payment</button>
     </div>
 </div>
 

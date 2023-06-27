@@ -23,7 +23,7 @@ $(document).ready(function() {
             }
 
 
-            cartItemsHtml += '<button class="openButton" data-index="' + i + '">Delete</button>';
+            cartItemsHtml += '<button class="deleteButton" data-index="' + i + '">Delete</button>';
             cartItemsHtml += '</div>';
         }
 
@@ -32,7 +32,7 @@ $(document).ready(function() {
         $('#cartItems').html('<p>No items in the cart.</p>');
     }
 
-    $(document).on('click', '.openButton', function() {
+    $(document).on('click', '.deleteButton', function() {
         var index = $(this).data('index');
         var cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
