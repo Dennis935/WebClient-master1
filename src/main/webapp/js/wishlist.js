@@ -35,9 +35,17 @@ $(document).ready(function() {
         }
 
         $('#wishlistItems').html(wishlistItemsHtml);
+
+        $('.event').click(function() {
+            var index = $(this).index();
+            var wishlistItem = wishlistItems[index];
+            var eventId = wishlistItem.eventId;
+            window.location.href = 'http://localhost:8080/WebClient-1.0-SNAPSHOT/event.jsp?id=' + eventId;
+        });
     } else {
         $('#wishlistItems').html('<p>No items in the wishlist.</p>');
     }
+
 
     $(document).on('click', '.remove-from-wishlist-button', function() {
         var index = $(this).data('index');

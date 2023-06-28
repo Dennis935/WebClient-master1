@@ -188,6 +188,7 @@ $(document).ready(function() {
     $(document).on('click', '.addToWishlist-button', function() {
         var customerID = $('#logoutButton').data('username');
         var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + customerID;
+        var selectedEventId = eventId;
 
         function displayWishlistItems(event) {
             $('#eventTitle').html('<strong>' + event.eventName + '</strong>');
@@ -211,12 +212,13 @@ $(document).ready(function() {
                     console.log('Event added to wishlist');
                     var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
                     var wishlistItem = {
+                        eventId: selectedEventId,
                         event: eventDetails,
                     };
                     wishlistItems.push(wishlistItem);
                     localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
-                    displayWishlistItems(eventDetails); // Pass eventDetails to the display function
-                    location.reload(); // Refresh the page to reflect the updated wishlist
+                    displayWishlistItems(eventDetails);
+                    location.reload();
                 } else {
                     console.error('Failed to add event to wishlist');
                 }
