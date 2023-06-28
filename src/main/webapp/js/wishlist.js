@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var customerId = $('#logoutButton').data('username');
+    const customerId = $('#logoutButton').data('username');
+    console.log(customerId);
     fetch('http://localhost:8083/wishlist/display?customerId=' + customerId, { method: 'GET' })
         .then(response => {
             if (response.ok) {
@@ -57,6 +58,7 @@ $(document).ready(function() {
             location.reload();
         }
     });
+
 });
 
 function redirectToPayment() {
