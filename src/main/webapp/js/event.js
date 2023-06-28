@@ -186,9 +186,25 @@ $(document).ready(function() {
 
     // Handle add to wishlist button click
     $(document).on('click', '.addToWishlist-button', function() {
-        var customerId = $('#logoutButton').data('username');
-        var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + customerId;
-        console.log(url);
+        var customerID = $('#logoutButton').data('username');
+        var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + customerID;
+
+        function displayWishlistItems(event) {
+            $('#eventTitle').html('<strong>' + event.eventName + '</strong>');
+            $('#eventDescription').html(event.eventDesc);
+            $('#eventDate').html('<p class="details">Date:</p> ' + event.date);
+            $('#eventLocation').html('<p class="details">Location:</p> ' + event.location);
+            $('#eventTime').html('<p class="details">Time:</p> ' + event.time + ' Uhr');
+        }
+
+        var eventDetails = {
+            title: $('#eventTitle').text(),
+            description: $('#eventDescription').text(),
+            date: $('#eventDate').text(),
+            location: $('#eventLocation').text(),
+            time: $('#eventTime').text(),
+        };
+
         fetch(url, { method: 'GET' })
             .then(response => {
                 if (response.ok) {
@@ -208,23 +224,6 @@ $(document).ready(function() {
             .catch(error => {
                 console.error('Error adding event to wishlist:', error);
             });
-        function displayWishlistItems(event) {
-            $('#eventTitle').html('<strong>' + event.eventName + '</strong>');
-            $('#eventDescription').html(event.eventDesc);
-            $('#eventDate').html('<p class="details">Date:</p> ' + event.date);
-            $('#eventLocation').html('<p class="details">Location:</p> ' + event.location);
-            $('#eventTime').html('<p class="details">Time:</p> ' + event.time + ' Uhr');
-        }
-
-        var eventDetails = {
-            title: $('#eventTitle').text(),
-            description: $('#eventDescription').text(),
-            date: $('#eventDate').text(),
-            location: $('#eventLocation').text(),
-            time: $('#eventTime').text(),
-        };
-
-
     });
 
 
