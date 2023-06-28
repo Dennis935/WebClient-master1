@@ -85,17 +85,6 @@
     <div class="events">
         <h2>Wishlist</h2>
             <div id="wishlistItems"></div>
-        <c:forEach items="${wishlist.events}" var="event">
-            <div class="event">
-                <h3>${event.title}</h3>
-                <p>${event.description}</p>
-                <p>${event.date}</p>
-                <p>${event.location}</p>
-                <p>${event.time}</p>
-                <button class="remove-button" onclick="removeFromWishlist('${event.id}')">Remove</button>
-            </div>
-        </c:forEach>
-
     </div>
 </div>
 </body>
