@@ -18,6 +18,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-7h7s6+sg5uQw3G1O7w4AjlCE+hK8Vi7uMz5F8xAt1VqSz9tLJZ3zNj6k0I5bvlww" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
     <script type="text/javascript" src="js/cart.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/tooltip.js"></script>
@@ -43,13 +45,13 @@
             <div class="tooltip">Login</div>
         </div>
         <% } %>
+        <div class="wishlist-icon" id="wishlistButton">
+            <a href="ProfileServlet?wishlistButton=true"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
+            <div class="tooltip">Wishlist</div>
+        </div>
         <div class="cart-icon" id="cartButton">
             <a href="ProfileServlet"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
             <div class="tooltip">Cart</div>
-        </div>
-        <div class="wishlist-icon">
-            <a href="wishlist.jsp"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
-            <div class="tooltip">Wishlist</div>
         </div>
     </div>
 </div>
@@ -59,7 +61,7 @@
         <div id="cartItems">
             <!-- Cart items will be dynamically generated here -->
         </div>
-        <button class="buy-button" onclick="redirectToPayment()">Proceed To Payment</button>
+        <button class="buy-button">Proceed To Payment</button>
     </div>
 </div>
 

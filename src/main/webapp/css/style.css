@@ -57,6 +57,7 @@ p {
     cursor: pointer;
 }
 
+
 .loginWhiteBox {
     display: flex;
     justify-content: center;
@@ -164,6 +165,28 @@ p {
     font-size: 14px;
 }
 
+.eventCart {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.eventCart h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.eventCart p {
+    margin-top: 0;
+    font-size: 14px;
+}
+
 .openButton {
     display: inline-block;
     width: 100px;
@@ -213,14 +236,20 @@ p {
 
 .deleteButton:hover {
     background-color: #DC143C;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    box-shadow: 0px 15px 20px rgba(220, 20, 60, 0.4); /* Dunkelroter Box-Schatten */
     color: #fff;
+    transform: translateY(-3px);
 }
+
+.deleteButton:active {
+    transform: translateY(-1px);
+}
+
 
 .filterButton {
     display: block;
-    width: 150px;
-    padding: 1.0em 1.2em;
+    width: 100px;
+    padding: 0.6rem 0.8rem; /* Padding des Buttons anpassen */
     margin-bottom: 30px;
     font-size: 12px;
     text-transform: uppercase;
@@ -236,14 +265,76 @@ p {
     outline: none;
 }
 
+
+
 .filterButton:hover {
     background-color: #23c483;
     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
     color: #fff;
-    transform: translateY(-7px);
+    transform: translateY(-5px);
 }
 
 .filterButton:active {
+    transform: translateY(-1px);
+}
+
+.addToWishlist-button {
+    display: block;
+    padding: 0.6rem 0.8rem; /* Padding des Buttons anpassen */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #2976d6;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+
+.addToWishlist-button:hover {
+    background-color: #2976d6;
+    box-shadow: 0px 15px 20px rgba(41, 118, 214, 0.4);
+    color: #fff;
+    transform: translateY(-4px);
+}
+
+.addToWishlist-button:active {
+    transform: translateY(-1px);
+}
+
+.remove-from-wishlist-button {
+    display: block;
+    padding: 0.6rem 0.8rem; /* Padding des Buttons anpassen */
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #DC143C;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+
+.remove-from-wishlist-button:hover {
+    background-color: #DC143C;
+    box-shadow: 0px 15px 20px rgba(220, 20, 60, 0.4);
+    color: #fff;
+    transform: translateY(-4px);
+}
+
+.remove-from-wishlist-button:active {
     transform: translateY(-1px);
 }
 
@@ -253,7 +344,7 @@ p {
     padding: 1.1em 1.5em;
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 2.5px;
+    letter-spacing: 1px;
     font-weight: 500;
     color: #fff;
     background-color: #2976d6;
@@ -279,10 +370,10 @@ p {
 .buy-button {
     display: block;
     width: 150px;
-    padding: 1.1em 1.5em;
+    padding: 0.6rem 0.8rem;
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 2.5px;
+    letter-spacing: 1px;
     font-weight: 500;
     color: #fff;
     background-color: #2976d6;
@@ -512,6 +603,7 @@ footer {
 .addToCart-button:focus,
 .buy-button:focus,
 .deleteButton:focus,
+.addToWishlist-button:focus,
 .button:focus
 {
     outline: none;
@@ -646,7 +738,7 @@ footer {
 }
 
 .event-info {
-    background-color: #f9f9f9;
+    background-color: white;
     padding: 20px;
     border-radius: 4px;
 }

@@ -32,7 +32,22 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(ck);
             response.sendRedirect("index.jsp");
         } else {
-            out.print("Sorry, username or password error!");
+            out.println("<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js\"></script>");
+            out.println("<script>");
+            out.println("window.onload = function() {");
+            out.println("    swal({");
+            out.println("        title: 'Error',");
+            out.println("        text: 'Wrong username or password!',");
+            out.println("        icon: 'error',");
+            out.println("        confirmButtonColor: '#235da8',");
+            out.println("        button: 'ok',");
+            out.println("    }).then(function() {");
+            out.println("       Swal.close();");
+            out.println("    });");
+            out.println("};");
+            out.println("</script>");
+
+
             request.getRequestDispatcher("login.jsp").include(request, response);
             request.setAttribute("loggedIn", false);
         }

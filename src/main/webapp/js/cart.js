@@ -10,7 +10,7 @@ $(document).ready(function() {
             var category = cartItem.category.name;
             var seats = cartItem.seats;
 
-            cartItemsHtml += '<div class="event">';
+            cartItemsHtml += '<div class="eventCart">';
             cartItemsHtml += '<h3>' + event.title + '</h3>';
             cartItemsHtml += '<p>' + event.date + '</p>';
             cartItemsHtml += '<p>' + event.location + '</p>';
@@ -43,7 +43,23 @@ $(document).ready(function() {
         }
     });
 
-
+    $('.buy-button').click(function() {
+        if (cartItems && cartItems.length > 0) {
+            redirectToPayment();
+        } else {
+            Swal.fire({
+                title: 'Cart is empty',
+                text: 'Please add items to the cart before proceeding to payment.',
+                icon: 'warning',
+                confirmButtonColor: '#235da8',
+                button: 'OK',
+                timer: 3000,
+                timerProgressBar: true
+            }).then(function () {
+                Swal.close();
+            });
+        }
+    });
 });
 
 function redirectToPayment() {

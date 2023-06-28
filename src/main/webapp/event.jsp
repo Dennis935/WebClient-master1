@@ -35,7 +35,7 @@
     <div class="navbar-icons">
         <% String username = (String) session.getAttribute("username");
             if (username != null) { %>
-        <div class="login-icon" id="logoutButton" data-username="<%= username %>">
+        <div class="login-icon" id="logoutButton">
             <span>Welcome, <%= username %></span>
             <a href="LogoutServlet" id="logoutLink"><i class="fas fa-sign-out-alt" style="color: white;"></i></a>
             <div class="tooltip">Logout</div>
@@ -46,13 +46,13 @@
             <div class="tooltip">Login</div>
         </div>
         <% } %>
+        <div class="wishlist-icon" id="wishlistButton">
+            <a href="ProfileServlet?wishlistButton=true"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
+            <div class="tooltip">Wishlist</div>
+        </div>
         <div class="cart-icon" id="cartButton">
             <a href="ProfileServlet"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
             <div class="tooltip">Cart</div>
-        </div>
-        <div class="wishlist-icon">
-            <a href="wishlist.jsp"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
-            <div class="tooltip">Wishlist</div>
         </div>
     </div>
 </div>
@@ -75,6 +75,8 @@
                         <p id="eventLocation"></p>
                         <p id="eventTime"></p>
                         <div id="videoContainer"></div>
+                        <button class="addToWishlist-button">Add to wishlist</button>
+                        <button class="remove-from-wishlist-button">Remove from wishlist</button>
                     </div>
                 </div>
             </div>

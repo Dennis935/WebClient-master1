@@ -32,3 +32,13 @@
     visibility: visible;
     opacity: 1;
 }
+
+.wishlist-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.wishlist-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}

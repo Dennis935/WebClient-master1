@@ -49,13 +49,13 @@
             <div class="tooltip">Login</div>
         </div>
         <% } %>
+        <div class="wishlist-icon" id="wishlistButton">
+            <a href="ProfileServlet?wishlistButton=true"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
+            <div class="tooltip">Wishlist</div>
+        </div>
         <div class="cart-icon" id="cartButton">
             <a href="ProfileServlet"><i class="fas fa-shopping-cart" style="color: white;"></i></a>
             <div class="tooltip">Cart</div>
-        </div>
-        <div class="wishlist-icon">
-            <a href="wishlist.jsp"><i class="fas fa-heart" style="color: white;  margin-left: 10px;"></i></a>
-            <div class="tooltip">Wishlist</div>
         </div>
     </div>
 </div>
