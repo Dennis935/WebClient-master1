@@ -127,7 +127,7 @@ $(document).ready(function () {
             Swal.fire({
                 icon: 'success',
                 title: 'Buchungen erfolgreich',
-                text: 'Alle Buchungen wurden erfolgreich durchgeführt.',
+                text: 'Buchung für die Kategorie erfolgreich',
                 timer: 3000,
                 timerProgressBar: true
             }).then(function () {
@@ -164,16 +164,8 @@ $(document).ready(function () {
                 });
             },
             error: function (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Fehler beim Buchen',
-                    text: 'Fehler beim Buchen für Kategorie: ' + categoryName,
-                    confirmButtonColor: '#235da8',
-                    timer: 3000,
-                    timerProgressBar: true
-                }).then(function () {
-                    performBooking(cartItems, customerId, index + 1);
-                });
+                console.error(error);
+                performBooking(cartItems, customerId, index + 1);
             },
             complete: function () {
                 if (index >= cartItems.length - 1) {
@@ -186,7 +178,7 @@ $(document).ready(function () {
                         timerProgressBar: true
                     }).then(function () {
                         localStorage.removeItem('cartItems');
-                        window.location.href = "success.jsp";
+                        window.location.href = "index.jsp";
                     });
                 }
             }

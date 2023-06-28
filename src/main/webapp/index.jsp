@@ -49,6 +49,7 @@
 <div class="whiteBox">
     <div class="genreContainer border-bottom ">
         <h3>Filter</h3>
+        <br>
         <form id="filterForm">
             <div class="filter-row">
                 <label>
