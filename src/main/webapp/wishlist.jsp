@@ -86,17 +86,9 @@
 <div class="whiteBox">
     <div class="events">
         <h2>Wishlist</h2>
-        <c:forEach items="${wishlist}" var="event">
-            <div class="event">
-                <h3>${event.name}</h3>
-                <p>Date: ${event.date}</p>
-                <p>Category: ${event.category}</p>
-                <button class="remove-button" onclick="removeFromWishlist('${event.id}')">Remove</button>
-            </div>
-        </c:forEach>
+        <div id="wishlistItems"></div>
     </div>
 </div>
-<button class="buy-button">Buy</button>
 </body>
 <footer class="text-center text-lg-start text-white"
         style="background-color: #1D1B15">

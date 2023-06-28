@@ -184,58 +184,38 @@ $(document).ready(function() {
 
     //Wishlist
 
-    var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
-
-    if (wishlistItems && wishlistItems.length > 0) {
-        var wishlistItemsHtml = '';
-
-        for (var i = 0; i < wishlistItems.length; i++) {
-            var wishlistItem = wishlistItems[i];
-            var event = wishlistItem.event;
-
-            wishlistItemsHtml += '<div class="event">';
-            wishlistItemsHtml += '<h3>' + event.title + '</h3>';
-            wishlistItemsHtml += '<p>' + event.description + '</p>';
-            wishlistItemsHtml += '<p>' + event.date + '</p>';
-            wishlistItemsHtml += '<p>' + event.location + '</p>';
-            wishlistItemsHtml += '<p>' + event.time + '</p>';
-
-            wishlistItemsHtml += '<button class="remove-from-wishlist-button" data-index="' + i + '">Remove from Wishlist</button>';
-            wishlistItemsHtml += '</div>';
-        }
-
-        $('#wishlistItems').html(wishlistItemsHtml);
-    } else {
-        $('#wishlistItems').html('<p>No items in the wishlist.</p>');
-    }
-
-
-    // Handle remove from wishlist button click
-    $(document).on('click', '.remove-from-wishlist-button', function() {
-        var index = $(this).data('index');
-        var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
-
-        if (wishlistItems && wishlistItems.length > index) {
-            wishlistItems.splice(index, 1);
-            localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
-            location.reload();
-        }
-    });
-
     // Handle add to wishlist button click
     $(document).on('click', '.addToWishlist-button', function() {
         var customerID = $('#logoutButton').data('username');
-
         var url = 'http://localhost:8083/wishlist/add?eventId=' + eventId + '&customerId=' + customerID;
+
+        function displayWishlistItems(event) {
+            $('#eventTitle').html('<strong>' + event.eventName + '</strong>');
+            $('#eventDescription').html(event.eventDesc);
+            $('#eventDate').html('<p class="details">Date:</p> ' + event.date);
+            $('#eventLocation').html('<p class="details">Location:</p> ' + event.location);
+            $('#eventTime').html('<p class="details">Time:</p> ' + event.time + ' Uhr');
+        }
+
+        var eventDetails = {
+            title: $('#eventTitle').text(),
+            description: $('#eventDescription').text(),
+            date: $('#eventDate').text(),
+            location: $('#eventLocation').text(),
+            time: $('#eventTime').text(),
+        };
 
         fetch(url, { method: 'GET' })
             .then(response => {
                 if (response.ok) {
                     console.log('Event added to wishlist');
-                    // Add the event to the wishlist locally
                     var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
-                    wishlistItems.push({ event: { id: eventId } });
+                    var wishlistItem = {
+                        event: eventDetails,
+                    };
+                    wishlistItems.push(wishlistItem);
                     localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+                    displayWishlistItems(eventDetails); // Pass eventDetails to the display function
                     location.reload(); // Refresh the page to reflect the updated wishlist
                 } else {
                     console.error('Failed to add event to wishlist');
@@ -245,5 +225,31 @@ $(document).ready(function() {
                 console.error('Error adding event to wishlist:', error);
             });
     });
+
+
+    // Handle remove from wishlist button click
+    $(document).on('click', '.removeWishlist-button', function() {
+        var customerID = $('#logoutButton').data('username');
+        // Make a request to remove the wishlist item
+        var url = 'http://localhost:8083/wishlist/remove?eventId=' + eventId + '&customerId=' + customerID;
+
+        fetch(url, { method: 'GET' })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Wishlist item removed');
+                    // Remove the wishlist item locally
+                    var wishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+                    var updatedWishlistItems = wishlistItems.filter(item => item.event.id !== eventId);
+                    localStorage.setItem('wishlistItems', JSON.stringify(updatedWishlistItems));
+                    location.reload();
+                } else {
+                    console.error('Failed to remove wishlist item');
+                }
+            })
+            .catch(error => {
+                console.error('Error removing wishlist item:', error);
+            });
+    });
+
 
 });
