@@ -1,5 +1,6 @@
 $(document).ready(function() {
     const customerId = $('#logoutButton').data('username');
+    console.log(customerId);
     fetch('http://localhost:8083/wishlist/display?customerId=' + customerId, { method: 'GET' })
         .then(response => {
             if (response.ok) {
